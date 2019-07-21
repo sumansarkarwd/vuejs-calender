@@ -23,6 +23,7 @@ export default new vuex.Store({
       { name: 'NOV', number: 11 },
       { name: 'DEC', number: 12 },
     ],
+    dayHeight: 0,
     viewPortHeight: 0,
     viewPortWidth: 0,
     jobFormPosX: 0,
@@ -85,5 +86,9 @@ export default new vuex.Store({
     setSelectedDate(state, payload) {
       state.jobFormDate = payload;
     },
+    totalWeeksInMonth(state, payload) {
+      let ignoreHeight = 90 + 35;
+      state.dayHeight = Math.floor(((state.viewPortHeight - ignoreHeight) / parseInt(payload)));      
+    }
   }
 })

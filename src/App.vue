@@ -76,14 +76,18 @@
       weeks() {
         let weeks = [];
         let week = [];
+        let totalWeeks = 0;
 
         for (let day of this.days) {
           week.push(day);
           if (week.length == 7) {
             weeks.push(week);
             week = [];
+            totalWeeks++;
           }
         }
+        
+        this.$store.commit('totalWeeksInMonth', totalWeeks);
 
         return weeks;
       },

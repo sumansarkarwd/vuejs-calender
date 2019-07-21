@@ -1,6 +1,6 @@
 <template>
   <div @click="clickHandler">
-    <div :class="classObject">
+    <div :class="classObject" :style="{height: dayHeight}">
       <span class="today-date">
         {{ day.format('D') }}
       </span>
@@ -35,6 +35,9 @@
       jobs() {
         let jobs = this.$store.state.jobs;
         return jobs.filter(job => job.date.isSame(this.day, 'day'));
+      },
+      dayHeight() {
+        return `${this.$store.state.dayHeight}px`;
       }
     },
     methods: {
@@ -53,7 +56,6 @@
 
 <style>
   .day {
-    height: 100px;
     width: calc((100%) / 7);
     border: 1px solid #dddcdc;
     padding: 10px;
