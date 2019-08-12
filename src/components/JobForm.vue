@@ -69,8 +69,9 @@
   .job-form {
     width: 350px;
     position: fixed;
-    transition: .3s ease-in-out;
+    /* transition: .3s ease-in-out; */
     padding: 15px;
+    transform-origin: top left;
   }
 
   .job-form div {
@@ -86,16 +87,18 @@
   }
 
   /* animation */
+
   .scale-enter {
-      transform: scale(0);
+    transform: scale(0);
   }
   .scale-enter-active {
-      transform: scale(1);
+    transition: .2s;
   }
   .scale-leave {
-      transform: scale(1);
+    /* opacity: 1; */
   }
   .scale-leave-active {
-      transform: scale(0);
+    transition: .2s;
+    transform: scale(0);;
   }
 </style>

@@ -7,7 +7,7 @@
 
       <div class="jobs">
         <ul class="list">
-          <transition-group name="scale">
+          <transition-group name="comeup">
             <li v-bind:key="jIndex" v-for="(job, jIndex) in jobs">{{job.description}}</li>
           </transition-group>
         </ul>
@@ -110,23 +110,20 @@
   }
 
   /* animation */
-  .scale-enter {
-    /* opacity: 0; */
-    transform: scale(0);
+  .comeup-enter {
+    transform: translateY(30px);
   }
-
-  .scale-enter-active {
-    transition: transform .3s ease-in-out;
-    transform: scale(1);
+  .comeup-enter-active {
+    transition: .3s;
   }
-
-  .scale-leave {
-    transform: scale(1);
+  .comeup-leave {
   }
-
-  .scale-leave-active {
-    transition: transform .3s ease-in-out;
-    transform: scale(0);
+  .comeup-leave-active {
+    transition: .3s;
+    transform: translateY(30px);
+  }
+  .comeup-move {
+    transition: .3s;
   }
 
 </style>

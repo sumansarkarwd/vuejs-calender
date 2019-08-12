@@ -31,7 +31,9 @@
   export default {
     name: 'app',
     data() {
-      return {}
+      return {
+        foo: true
+      }
     },
     components: {
       CalenderDay,
