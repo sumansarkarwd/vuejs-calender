@@ -8,7 +8,7 @@
       <div class="jobs">
         <ul class="list">
           <transition-group name="comeup">
-            <li v-bind:key="jIndex" v-for="(job, jIndex) in jobs">{{job.description}}</li>
+            <li @contextmenu.stop.prevent="removeTask(day, jIndex, job.description)" v-bind:key="jIndex" v-for="(job, jIndex) in jobs">{{job.description}}</li>
           </transition-group>
         </ul>
       </div>
@@ -48,6 +48,11 @@
           posY: event.clientY,
         });
         this.$store.commit('setSelectedDate', this.day);
+      },
+      removeTask(day, jIndex, jobDescription) {
+        console.log(day);
+        console.log(jIndex);
+        console.log(jobDescription);        
       }
     }
   }
@@ -119,7 +124,7 @@
   .comeup-leave {
   }
   .comeup-leave-active {
-    transition: .3s;
+    transition: .1s;
     transform: translateY(30px);
   }
   .comeup-move {

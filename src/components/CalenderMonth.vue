@@ -74,7 +74,7 @@
           this.$store.commit('setCurrentYear', parseInt((this.$moment()).format('YYYY')));
         },
         chooseMonthDate() {
-          this.showSelectMonthAndYear = true;
+          this.showSelectMonthAndYear = !this.showSelectMonthAndYear;
         },
         changeMonth(month) {
           this.$store.commit('setCurrentMonth', month);

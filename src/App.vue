@@ -97,6 +97,7 @@
     created() {
       window.addEventListener('resize', this.handleResize)
       this.handleResize();
+      this.$store.dispatch('getJobs')
     },
     methods: {
       handleResize() {

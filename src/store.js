@@ -1,6 +1,7 @@
 import Vue from "vue"
 import vuex from "vuex"
 import moment from "moment"
+import axios from "axios"
 
 Vue.use(vuex)
 Vue.use(moment)
@@ -89,6 +90,29 @@ export default new vuex.Store({
     totalWeeksInMonth(state, payload) {
       let ignoreHeight = 90 + 35;
       state.dayHeight = Math.floor(((state.viewPortHeight - ignoreHeight) / parseInt(payload)));      
+    },
+    getJobs(state, payload) {
+      state.jobs = payload;
+    }
+  },
+  actions: {
+    getJobs({commit}) {
+      axios.get("http://127.0.0.1:8000/api/jobs")
+      .then(res => {
+        const jobs = res.data.data;
+        let myJobs = [];
+        jobs.forEach((job) => {
+          let datetime = job.created_at;
+          let momentDt = moment(datetime);
+          let j = {
+            date: momentDt,
+            description: job.job
+          }
+          myJobs.push(j);
+        })
+        commit('getJobs', myJobs);    
+      })
+      .catch(err => console.log(err));
     }
   }
 })
