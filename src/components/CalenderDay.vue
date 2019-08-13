@@ -8,7 +8,8 @@
       <div class="jobs">
         <ul class="list">
           <transition-group name="comeup">
-            <li @contextmenu.stop.prevent="removeTask(day, jIndex, job.description)" v-bind:key="jIndex" v-for="(job, jIndex) in jobs">{{job.description}}</li>
+            <li @contextmenu.stop.prevent="removeTask(day, jIndex, job.description)" v-bind:key="jIndex"
+              v-for="(job, jIndex) in jobs">{{job.description}}</li>
           </transition-group>
         </ul>
       </div>
@@ -42,17 +43,27 @@
     },
     methods: {
       clickHandler(event) {
-        this.$store.commit('jobFormActive', true);
-        this.$store.commit('jobFormPos', {
-          posX: event.clientX,
-          posY: event.clientY,
-        });
-        this.$store.commit('setSelectedDate', this.day);
+        if (this.day.isBefore(this.$moment().subtract(1, 'day'))) {
+          this.$notify({
+            group: 'notification',
+            title: 'Error',
+            type: 'error',
+            text: 'Cannot add jobs in the past!'
+          });
+        } else {
+
+          this.$store.commit('jobFormActive', true);
+          this.$store.commit('jobFormPos', {
+            posX: event.clientX,
+            posY: event.clientY,
+          });
+          this.$store.commit('setSelectedDate', this.day);
+        }
       },
       removeTask(day, jIndex, jobDescription) {
         console.log(day);
         console.log(jIndex);
-        console.log(jobDescription);        
+        console.log(jobDescription);
       }
     }
   }
@@ -118,15 +129,18 @@
   .comeup-enter {
     transform: translateY(30px);
   }
+
   .comeup-enter-active {
     transition: .3s;
   }
-  .comeup-leave {
-  }
+
+  .comeup-leave {}
+
   .comeup-leave-active {
     transition: .1s;
     transform: translateY(30px);
   }
+
   .comeup-move {
     transition: .3s;
   }

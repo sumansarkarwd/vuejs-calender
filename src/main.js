@@ -14,6 +14,8 @@ from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon
 } from '@fortawesome/vue-fontawesome'
+import Notifications from 'vue-notification'
+
 library.add( faAngleRight, faAngleLeft, faTimes, faSortDown, faCaretDown);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -23,6 +25,7 @@ moment.t
 Vue.use(moment)
 Vue.use(vuex)
 Vue.use(BootstrapVue)
+Vue.use(Notifications)
 
 new Vue({
   el: '#app',

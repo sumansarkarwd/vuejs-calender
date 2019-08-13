@@ -2,9 +2,11 @@ import Vue from "vue"
 import vuex from "vuex"
 import moment from "moment"
 import axios from "axios"
+import Notifications from 'vue-notification'
 
 Vue.use(vuex)
 Vue.use(moment)
+Vue.use(Notifications)
 
 export default new vuex.Store({
   state: {
@@ -107,10 +109,36 @@ export default new vuex.Store({
         description: payload,
         date: state.jobFormDate
       });
+      let insertedJobIndex = state.jobs.length - 1;
       axios.post("http://127.0.0.1:8000/api/jobs", {
         job: payload,
         date: state.jobFormDate.format("YYYY-MM-DD")
-      })
+      }).then(res => {
+        if(res.data.code == 201) {
+          Vue.notify({
+            group: 'notification',
+            title: 'Success',
+            type: 'success',
+            text: 'Task Added Successfully!'
+          });
+        } else {
+          Vue.notify({
+            group: 'notification',
+            title: 'Error',
+            type: 'error',
+            text: 'Something Went Wrong!'
+          });
+          state.jobs.splice(insertedJobIndex, 1);
+        }
+      }).catch(err => {
+        Vue.notify({
+          group: 'notification',
+          title: 'Error',
+          type: 'error',
+          text: 'Something Went Wrong!'
+        });
+        state.jobs.splice(insertedJobIndex, 1);
+      });
     },
     setSelectedDate(state, payload) {
       state.jobFormDate = payload;

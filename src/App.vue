@@ -20,6 +20,7 @@
     </div>
 
     <job-form></job-form>
+    <notifications group="notification" position="bottom right"/>
   </div>
 </template>
 
