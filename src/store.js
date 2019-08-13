@@ -83,6 +83,10 @@ export default new vuex.Store({
         description: payload,
         date: state.jobFormDate
       });
+      axios.post("http://127.0.0.1:8000/api/jobs", {
+        job: payload,
+        date: state.jobFormDate.format("YYYY-MM-DD")
+      })
     },
     setSelectedDate(state, payload) {
       state.jobFormDate = payload;
@@ -102,7 +106,7 @@ export default new vuex.Store({
         const jobs = res.data.data;
         let myJobs = [];
         jobs.forEach((job) => {
-          let datetime = job.created_at;
+          let datetime = job.date;
           let momentDt = moment(datetime);
           let j = {
             date: momentDt,
