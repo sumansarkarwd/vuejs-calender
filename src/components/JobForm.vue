@@ -1,6 +1,6 @@
 <template>
   <transition name="scale">
-    <div class="card job-form" :style="{left, top }" v-show="showForm">
+    <div class="card job-form" :style="jobFormPosStyle" v-show="showForm">
       <div class="clearfix">
         <div class="float-left title text-secondary">Add Job</div>
         <div class="float-right pb-2">
@@ -29,11 +29,8 @@
       }
     },
     computed: {
-      left() {
-        return `${this.$store.state.jobFormPosX}px`;
-      },
-      top() {
-        return `${this.$store.state.jobFormPosY}px`;
+      jobFormPosStyle() {
+        return this.$store.state.jobFormPosStyle;
       },
       showForm() {
         return this.$store.state.jobFormShow;
@@ -71,7 +68,7 @@
     position: fixed;
     /* transition: .3s ease-in-out; */
     padding: 15px;
-    transform-origin: top left;
+    /* transform-origin: top left; */
   }
 
   .job-form div {

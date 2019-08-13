@@ -27,8 +27,7 @@ export default new vuex.Store({
     dayHeight: 0,
     viewPortHeight: 0,
     viewPortWidth: 0,
-    jobFormPosX: 0,
-    jobFormPosY: 0,
+    jobFormPosStyle: {},
     jobFormShow: false,
     jobs: [{
         description: 'Do this',
@@ -55,25 +54,50 @@ export default new vuex.Store({
     jobFormPos(state, payload) {
       let calcFormRightEnd = parseInt(payload.posX) + parseInt(350);
       let calcFormBottomEnd = parseInt(payload.posY) + parseInt(218);
-      console.log(calcFormBottomEnd + '-'+ payload.posY);
       
+      let outOfWidth = false;
+      let outOfHeight = false;
+      let pos = {};
 
       // if jobForm get out of window horizontally
       if (calcFormRightEnd > state.viewPortWidth) {
-        let howMuchBigger = calcFormRightEnd - state.viewPortWidth;
-        let posXShouldBe = payload.posX - (howMuchBigger + 100);
-        state.jobFormPosX = posXShouldBe;
-      } else {
-        state.jobFormPosX = payload.posX;
+        outOfWidth = true;
       }
-      // if jobForm get out of window horizontally
+      // if jobForm get out of window vertically
       if (calcFormBottomEnd > state.viewPortHeight) {
-        let howMuchBigger = calcFormBottomEnd - state.viewPortHeight;
-        let posYShouldBe = payload.posY - (howMuchBigger + 50);
-        state.jobFormPosY = posYShouldBe;
-      } else {
-        state.jobFormPosY = payload.posY;
+        outOfHeight = true;
       }
+
+      if(outOfWidth && outOfHeight) {
+        // if jobForm get out of window horizontally and vertically
+        pos = {
+          right: (state.viewPortWidth - payload.posX)+'px',
+          bottom: (state.viewPortHeight - payload.posY)+'px',
+          'transform-origin': 'bottom right',
+        }
+      } else if (outOfWidth && !outOfHeight) {
+        // if jobForm get out of window horizontally
+        pos = {
+          right: (state.viewPortWidth - payload.posX)+'px',
+          top: payload.posY+'px',
+          'transform-origin': 'top right',
+        }
+      } else if (!outOfWidth && outOfHeight) {
+        // if jobForm get out of window vertically
+        pos = {
+          left: payload.posX+'px',
+          bottom: (state.viewPortHeight - payload.posY)+'px',
+          'transform-origin': 'bottom left',
+        }
+      } else {
+        // if jobForm get within the window
+        pos = {
+          left: payload.posX+'px',
+          top: payload.posY+'px',
+          'transform-origin': 'top left',
+        };
+      }      
+      state.jobFormPosStyle = pos;
     },
     jobFormActive(state, payload) {
       state.jobFormShow = payload;
