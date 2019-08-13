@@ -161,6 +161,7 @@ export default new vuex.Store({
           let datetime = job.date;
           let momentDt = moment(datetime);
           let j = {
+            id: job.id,
             date: momentDt,
             description: job.job
           }
